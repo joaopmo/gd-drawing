@@ -1,6 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://b7p4pluygccp1"]
+[gd_scene load_steps=3 format=3 uid="uid://b7p4pluygccp1"]
 
 [ext_resource type="Script" path="res://Main.gd" id="1_1oxv6"]
+[ext_resource type="Script" path="res://websocket/WebSocketServer.gd" id="2_eu1tr"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_1oxv6")
+line_width = 6.0
+
+[node name="WebSocketServer" type="Node" parent="."]
+script = ExtResource("2_eu1tr")
+
+[connection signal="client_connected" from="WebSocketServer" to="." method="_on_web_socket_server_client_connected"]
