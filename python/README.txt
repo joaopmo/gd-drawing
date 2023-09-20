@@ -1,4 +1,7 @@
 python -m venv cnn
-source rc1/bin/activate
+
+https://docs.python.org/3/library/venv.html#how-venvs-work
+source cnn/bin/activate
+
 pip install -r requirements.txt
 python main.py PORT
