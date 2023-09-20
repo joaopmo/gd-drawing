@@ -9,5 +9,7 @@ line_width = 6.0
 
 [node name="WebSocketServer" type="Node" parent="."]
 script = ExtResource("2_eu1tr")
+refuse_new_connections = true
 
 [connection signal="client_connected" from="WebSocketServer" to="." method="_on_web_socket_server_client_connected"]
+[connection signal="message_received" from="WebSocketServer" to="." method="_on_web_socket_server_message_received"]

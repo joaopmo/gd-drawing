@@ -158,5 +158,5 @@ func _connect_pending(p: PendingPeer) -> bool:
 		return false
 
 
-func _process(delta):
+func _process(_delta):
 	poll()
