@@ -7,25 +7,26 @@ import cv2
 from PIL import Image
 from transformers import TrOCRProcessor, VisionEncoderDecoderModel
 
-margin = 20
+padding = 20
 
 
 async def process(message, ws):
     event = json.loads(message)
 
     if event["type"] == "char":
-        bbox = event["bbox"]
-        width = bbox[2] - bbox[0] + 1
-        height = bbox[3] - bbox[1] + 1
-        array = np.full([height + margin, width + margin], 255, dtype=np.uint8)
-        m = margin // 2
+        [x_min, y_min, x_max, y_max] = event["bbox"]
+        width = x_max - x_min + 1
+        height = y_max - y_min + 1
+        array = np.full([height + padding, width + padding], 255, dtype=np.uint8)
+
+        pad = padding // 2
         for line in event["data"]:
             if len(line) >= 2:
-                line = np.array([[x - bbox[0] + m, y - bbox[1] + m] for [x, y] in line]).reshape((-1, 1, 2))
+                line = np.array([[x - x_min + pad, y - y_min + pad] for [x, y] in line]).reshape((-1, 1, 2))
                 array = cv2.polylines(array, [line], False, (0, 0, 0), 2)
             elif len(line) == 1:
                 [x, y] = line[0]
-                array = cv2.circle(array, [x - bbox[0] + m, y - bbox[1] + m], 2, (0, 0, 0), 2)
+                array = cv2.circle(array, [x - x_min + pad, y - y_min + pad], 2, (0, 0, 0), 2)
 
         img = Image.fromarray(array).convert("RGB")
 
@@ -33,9 +34,9 @@ async def process(message, ws):
         model = VisionEncoderDecoderModel.from_pretrained('microsoft/trocr-base-handwritten')
         pixel_values = processor(images=img, return_tensors="pt").pixel_values
         generated_ids = model.generate(pixel_values)
-        generated_text = processor.batch_decode(generated_ids, skip_special_tokens=True)
+        generated_text = processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
 
-        await ws.send(json.dumps(generated_text))
+        await ws.send(generated_text)
         img.save('test.png')
 
 
