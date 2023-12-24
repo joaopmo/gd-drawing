@@ -51,6 +51,7 @@ func _draw():
 			
 			
 func call_py_on_thread(port):
+	print("Thread call ", OS.get_executable_path())
 	var output = []
 #	var status = OS.execute("sh", ["python/linux.sh", port], output, true)
 #	if status != 0:
