@@ -1,0 +1,46 @@
+[gd_scene load_steps=4 format=3 uid="uid://dljc634vpa233"]
+
+[ext_resource type="Script" path="res://scripts/Player.gd" id="1_2sjr2"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_idub6"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vt1dy"]
+height = 1.4
+
+[node name="Player" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.60915, 0, 5.05914)
+script = ExtResource("1_2sjr2")
+camera_sensitivity = 0.3
+
+[node name="StandingCollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_idub6")
+
+[node name="CrouchingCollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+shape = SubResource("CapsuleShape3D_vt1dy")
+disabled = true
+
+[node name="head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+
+[node name="Camera3D" type="Camera3D" parent="head"]
+
+[node name="Crosshair" type="ColorRect" parent="head/Camera3D"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 5.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+
+[node name="CrosshairRayCast" type="RayCast3D" parent="head"]
+target_position = Vector3(0, 0, -5)
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, 2, 0)
