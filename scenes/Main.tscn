@@ -1,53 +1,33 @@
-[gd_scene load_steps=16 format=3 uid="uid://d4a40ntkkp8hc"]
+[gd_scene load_steps=14 format=3 uid="uid://d4a40ntkkp8hc"]
 
 [ext_resource type="Texture2D" uid="uid://c1ivwkv8n0e7d" path="res://assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="1_f0drt"]
 [ext_resource type="PackedScene" uid="uid://dljc634vpa233" path="res://scenes/Player.tscn" id="2_me14a"]
 [ext_resource type="PackedScene" uid="uid://b0c55rfg4xbvj" path="res://scenes/Stage.tscn" id="2_v8o6y"]
 [ext_resource type="Script" path="res://scripts/Brush.gd" id="3_syip0"]
-[ext_resource type="Texture2D" uid="uid://207v45tgfonf" path="res://assets/textures/texture_07.png" id="4_34wcv"]
 [ext_resource type="Script" path="res://scripts/SetUVPositionMesh.gd" id="4_88ga8"]
-[ext_resource type="Shader" uid="uid://d3c0yvxdxhw0m" path="res://shaders/main.tres" id="5_id5bi"]
-[ext_resource type="Texture2D" uid="uid://dsc0oswknho7k" path="res://assets/textures/brush.png" id="7_uxb2p"]
+[ext_resource type="Texture2D" uid="uid://d1r6wn0i4gahc" path="res://assets/textures/texture_07.png" id="4_y28wh"]
+[ext_resource type="Shader" path="res://shaders/triplanar-texture.gdshader" id="5_skpb1"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_4nkqe"]
 panorama = ExtResource("1_f0drt")
 
 [sub_resource type="Sky" id="Sky_tmmuw"]
 sky_material = SubResource("PanoramaSkyMaterial_4nkqe")
+radiance_size = 2
 
 [sub_resource type="Environment" id="Environment_d8j41"]
 background_mode = 2
 sky = SubResource("Sky_tmmuw")
 tonemap_mode = 2
 glow_enabled = true
+fog_sky_affect = 0.9
+volumetric_fog_enabled = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_agrab"]
-render_priority = 0
-shader = ExtResource("5_id5bi")
-shader_parameter/MainColor = ExtResource("4_34wcv")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6ip7y"]
+albedo_texture = ExtResource("4_y28wh")
+uv1_triplanar = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_adycg"]
-render_priority = 0
-shader = ExtResource("5_id5bi")
-shader_parameter/MainColor = ExtResource("4_34wcv")
-shader_parameter/Paint = ExtResource("7_uxb2p")
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_0h4ql"]
-_surfaces = [{
-"aabb": AABB(-10, -1, -10, 21, 4, 21),
-"format": 34896613377,
-"index_count": 72,
-"index_data": PackedByteArray(12, 0, 0, 0, 5, 0, 12, 0, 11, 0, 0, 0, 6, 0, 2, 0, 3, 0, 6, 0, 7, 0, 2, 0, 4, 0, 12, 0, 5, 0, 4, 0, 9, 0, 12, 0, 7, 0, 4, 0, 2, 0, 9, 0, 8, 0, 10, 0, 7, 0, 9, 0, 4, 0, 9, 0, 7, 0, 8, 0, 5, 0, 2, 0, 4, 0, 3, 0, 0, 0, 1, 0, 5, 0, 3, 0, 2, 0, 5, 0, 0, 0, 3, 0, 13, 0, 3, 0, 1, 0, 13, 0, 6, 0, 3, 0, 13, 0, 10, 0, 8, 0, 11, 0, 1, 0, 0, 0, 13, 0, 11, 0, 10, 0, 13, 0, 1, 0, 11, 0, 9, 0, 11, 0, 12, 0, 9, 0, 10, 0, 11, 0, 8, 0, 6, 0, 13, 0, 8, 0, 7, 0, 6, 0),
-"material": SubResource("ShaderMaterial_adycg"),
-"name": "Material_0",
-"primitive": 3,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 14,
-"vertex_data": PackedByteArray(0, 0, 255, 63, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 206, 243, 255, 255, 0, 0, 0, 0, 206, 243, 255, 63, 0, 0, 0, 0, 255, 255, 0, 0, 255, 255, 0, 0, 255, 255, 255, 255, 255, 255, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 206, 243, 255, 255, 206, 243, 0, 0, 0, 0, 255, 255, 206, 243, 0, 0, 0, 0, 255, 63, 206, 243, 0, 0, 206, 243, 255, 63, 206, 243, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0)
-}]
-blend_shape_mode = 0
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_o2rk4"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_q7w7a"]
 resource_name = "stage_Mesh_0_001"
 _surfaces = [{
 "aabb": AABB(-10, -1, -10, 21, 4, 21),
@@ -55,7 +35,7 @@ _surfaces = [{
 "format": 34896613399,
 "index_count": 72,
 "index_data": PackedByteArray(38, 0, 2, 0, 17, 0, 38, 0, 35, 0, 2, 0, 20, 0, 8, 0, 11, 0, 20, 0, 23, 0, 8, 0, 12, 0, 36, 0, 15, 0, 12, 0, 27, 0, 36, 0, 22, 0, 14, 0, 7, 0, 29, 0, 26, 0, 32, 0, 22, 0, 29, 0, 14, 0, 29, 0, 22, 0, 26, 0, 16, 0, 6, 0, 13, 0, 10, 0, 1, 0, 5, 0, 16, 0, 10, 0, 6, 0, 16, 0, 1, 0, 10, 0, 40, 0, 9, 0, 4, 0, 40, 0, 18, 0, 9, 0, 39, 0, 30, 0, 24, 0, 33, 0, 3, 0, 0, 0, 39, 0, 33, 0, 30, 0, 39, 0, 3, 0, 33, 0, 28, 0, 34, 0, 37, 0, 28, 0, 31, 0, 34, 0, 25, 0, 19, 0, 41, 0, 25, 0, 21, 0, 19, 0),
-"material": SubResource("ShaderMaterial_agrab"),
+"material": SubResource("StandardMaterial3D_6ip7y"),
 "name": "Material_0",
 "primitive": 3,
 "uv_scale": Vector4(0, 0, 0, 0),
@@ -63,7 +43,19 @@ _surfaces = [{
 "vertex_data": PackedByteArray(0, 0, 255, 63, 0, 0, 84, 213, 0, 0, 255, 63, 0, 0, 255, 255, 0, 0, 255, 63, 0, 0, 255, 191, 0, 0, 0, 0, 0, 0, 84, 213, 0, 0, 0, 0, 0, 0, 255, 255, 0, 0, 0, 0, 0, 0, 255, 255, 255, 255, 255, 255, 0, 0, 255, 255, 255, 255, 255, 255, 0, 0, 255, 191, 255, 255, 255, 255, 0, 0, 84, 213, 255, 255, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 84, 213, 206, 243, 255, 255, 0, 0, 84, 213, 206, 243, 255, 255, 0, 0, 255, 255, 206, 243, 255, 255, 0, 0, 255, 191, 206, 243, 255, 63, 0, 0, 84, 213, 206, 243, 255, 63, 0, 0, 255, 255, 206, 243, 255, 63, 0, 0, 255, 191, 255, 255, 0, 0, 255, 255, 255, 255, 255, 255, 0, 0, 255, 255, 255, 191, 255, 255, 0, 0, 255, 255, 84, 213, 255, 255, 255, 255, 255, 255, 255, 191, 255, 255, 255, 255, 255, 255, 255, 191, 255, 255, 255, 255, 255, 255, 84, 213, 0, 0, 255, 255, 255, 255, 84, 213, 0, 0, 255, 255, 255, 255, 255, 191, 0, 0, 255, 255, 255, 255, 255, 191, 206, 243, 255, 255, 206, 243, 84, 213, 206, 243, 255, 255, 206, 243, 255, 255, 206, 243, 255, 255, 206, 243, 255, 191, 0, 0, 255, 255, 206, 243, 84, 213, 0, 0, 255, 255, 206, 243, 255, 255, 0, 0, 255, 255, 206, 243, 255, 191, 0, 0, 255, 63, 206, 243, 84, 213, 0, 0, 255, 63, 206, 243, 255, 255, 0, 0, 255, 63, 206, 243, 255, 191, 206, 243, 255, 63, 206, 243, 84, 213, 206, 243, 255, 63, 206, 243, 255, 255, 206, 243, 255, 63, 206, 243, 255, 191, 0, 0, 0, 0, 255, 255, 84, 213, 0, 0, 0, 0, 255, 255, 255, 255, 0, 0, 0, 0, 255, 255, 255, 191, 84, 85, 170, 170, 255, 63, 255, 191, 255, 255, 255, 127, 84, 85, 170, 170, 255, 127, 255, 63, 255, 63, 255, 191, 255, 63, 255, 191, 255, 255, 255, 127, 170, 170, 84, 85, 255, 127, 255, 63, 255, 63, 255, 191, 170, 170, 84, 85, 84, 85, 170, 170, 255, 63, 255, 191, 255, 255, 255, 127, 84, 85, 170, 170, 255, 63, 255, 191, 255, 255, 255, 127, 255, 127, 255, 63, 255, 127, 255, 127, 170, 170, 84, 85, 255, 127, 255, 127, 254, 255, 255, 127, 170, 170, 84, 85, 84, 85, 170, 170, 255, 127, 255, 127, 255, 255, 255, 127, 84, 85, 170, 170, 255, 63, 255, 191, 254, 255, 255, 127, 84, 85, 170, 170, 255, 63, 255, 191, 255, 255, 255, 127, 84, 85, 169, 170, 255, 63, 255, 191, 255, 255, 255, 127, 84, 85, 170, 170, 255, 63, 255, 191, 255, 255, 255, 127, 84, 85, 169, 170, 255, 127, 255, 63, 255, 127, 255, 127)
 }]
 blend_shape_mode = 0
-shadow_mesh = SubResource("ArrayMesh_0h4ql")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rhino"]
+render_priority = 0
+shader = ExtResource("5_skpb1")
+shader_parameter/albedo = Color(1, 1, 1, 0)
+shader_parameter/roughness = 0.0
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = null
+shader_parameter/metallic = null
+shader_parameter/uv1_blend_sharpness = 1.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = null
+shader_parameter/triplanar = true
 
 [node name="Main" type="Node3D"]
 
@@ -77,24 +69,25 @@ transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -
 shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("2_me14a")]
+camera_sensitivity = 0.1
 
 [node name="Stage" parent="." instance=ExtResource("2_v8o6y")]
 
 [node name="CSGCombiner3D2" parent="Stage" index="0"]
-mesh = SubResource("ArrayMesh_o2rk4")
+mesh = SubResource("ArrayMesh_q7w7a")
+surface_material_override/0 = SubResource("ShaderMaterial_rhino")
 script = ExtResource("4_88ga8")
 
 [node name="DrawViewport" type="SubViewport" parent="."]
 transparent_bg = true
 handle_input_locally = false
-size = Vector2i(1024, 1024)
+size = Vector2i(10240, 10240)
 render_target_clear_mode = 1
 render_target_update_mode = 4
 
 [node name="Brush" type="Node2D" parent="DrawViewport"]
 script = ExtResource("3_syip0")
-line_width = 2.0
-brush_size = 10
+line_width = 10.0
 
 [editable path="Player"]
 [editable path="Stage"]

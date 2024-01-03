@@ -8,7 +8,7 @@ extends CharacterBody3D
 @onready var crosshair_ray_cast = $head/CrosshairRayCast
 @onready var crosshair = $head/Camera3D/Crosshair
 
-@export var camera_sensitivity = 0.4
+@export var camera_sensitivity = 0.2
 const lerp_weight = 10.0
 const crouching_height = 1.3
 const standing_height = 1.8

@@ -5,10 +5,10 @@ expanded_output_ports = [0]
 input_name = "uv"
 
 [sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_jron7"]
-parameter_name = "MainColor"
+parameter_name = "texture_albedo"
 
 [sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_sprh8"]
-parameter_name = "Paint"
+parameter_name = "texture_paint"
 
 [sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_5hngg"]
 expanded_output_ports = [0]
@@ -26,8 +26,8 @@ op_type = 3
 code = "shader_type spatial;
 render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
 
-uniform sampler2D MainColor;
-uniform sampler2D Paint;
+uniform sampler2D texture_albedo;
+uniform sampler2D texture_paint;
 
 
 
@@ -38,12 +38,12 @@ void fragment() {
 
 	vec4 n_out5p0;
 // Texture2D:5
-	n_out5p0 = texture(MainColor, n_out2p0);
+	n_out5p0 = texture(texture_albedo, n_out2p0);
 
 
 	vec4 n_out6p0;
 // Texture2D:6
-	n_out6p0 = texture(Paint, n_out2p0);
+	n_out6p0 = texture(texture_paint, n_out2p0);
 	float n_out6p4 = n_out6p0.a;
 
 
@@ -57,6 +57,7 @@ void fragment() {
 
 }
 "
+graph_offset = Vector2(-587.874, 163.025)
 nodes/fragment/0/position = Vector2(720, 20)
 nodes/fragment/2/node = SubResource("VisualShaderNodeInput_0ku1p")
 nodes/fragment/2/position = Vector2(-700, 220)
@@ -65,9 +66,9 @@ nodes/fragment/3/position = Vector2(-700, -160)
 nodes/fragment/4/node = SubResource("VisualShaderNodeTexture2DParameter_sprh8")
 nodes/fragment/4/position = Vector2(-720, 360)
 nodes/fragment/5/node = SubResource("VisualShaderNodeTexture_5hngg")
-nodes/fragment/5/position = Vector2(-20, 100)
+nodes/fragment/5/position = Vector2(-60, 20)
 nodes/fragment/6/node = SubResource("VisualShaderNodeTexture_rqi8t")
-nodes/fragment/6/position = Vector2(-40, 360)
+nodes/fragment/6/position = Vector2(-60, 360)
 nodes/fragment/7/node = SubResource("VisualShaderNodeMix_ubgh5")
 nodes/fragment/7/position = Vector2(380.501, 236.11)
 nodes/fragment/connections = PackedInt32Array(2, 0, 5, 0, 4, 0, 6, 2, 5, 0, 7, 0, 6, 0, 7, 1, 6, 4, 7, 2, 7, 0, 0, 0, 3, 0, 5, 2, 2, 0, 6, 0)

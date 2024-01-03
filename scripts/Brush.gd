@@ -1,11 +1,10 @@
 extends Node2D
 
 @onready var crosshair_ray_cast: RayCast3D = $"/root/Main/Player/head/CrosshairRayCast"
+@onready var draw_viewport = $".."
 
 @export var line_width = 3.0
 @export var line_color := Color(1.0, 0.0, 0.0)
-@export var texture: Texture2D
-@export var brush_size: int = 100
 
 var characters = [[]]
 # x_min, y_min, x_max, y_max
@@ -39,22 +38,20 @@ func _physics_process(delta):
 		return 
 		
 	if Input.is_action_just_pressed("draw"):
+		# ML logic
 		characters = [[]]
 		bounding_boxes.clear()
 	
 	if Input.is_action_just_pressed("ui_left_click") and not characters.back().is_empty():
 		characters.push_back([])
 		
-	if Input.is_action_pressed("draw") and Input.is_action_pressed("ui_left_click"):
+	if Input.is_action_pressed("ui_left_click"):
 		var position = crosshair_ray_cast.get_collision_point()
 		var normal = crosshair_ray_cast.get_collision_normal()
 		var uv = LevelUVPosition.get_uv_coords(position, normal, true)
 		if uv:
-			insert_point(uv * 1024)
+			insert_point(uv * Vector2(draw_viewport.size))
 
-	if Input.is_action_just_released("draw"):
-		# ML logic
-		pass
 		
 func _draw():
 	for line in characters:
