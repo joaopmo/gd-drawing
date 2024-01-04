@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dljc634vpa233"]
+[gd_scene load_steps=5 format=3 uid="uid://dljc634vpa233"]
 
 [ext_resource type="Script" path="res://scripts/Player.gd" id="1_2sjr2"]
+[ext_resource type="Script" path="res://scripts/Crosshair.gd" id="2_tmvvd"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_idub6"]
 
@@ -8,7 +9,6 @@
 height = 1.4
 
 [node name="Player" type="CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.60915, 0, 5.05914)
 script = ExtResource("1_2sjr2")
 camera_sensitivity = 0.3
 
@@ -26,21 +26,22 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
 
 [node name="Camera3D" type="Camera3D" parent="head"]
 
-[node name="Crosshair" type="ColorRect" parent="head/Camera3D"]
-visible = false
+[node name="CrosshairRayCast" type="RayCast3D" parent="head"]
+target_position = Vector3(0, 0, -5)
+
+[node name="Crosshair" type="Control" parent="head"]
+layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_right = 5.0
-offset_bottom = 5.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 3
-
-[node name="CrosshairRayCast" type="RayCast3D" parent="head"]
-target_position = Vector3(0, 0, -5)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+script = ExtResource("2_tmvvd")
+brush_size = 20.0
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 target_position = Vector3(0, 2, 0)
