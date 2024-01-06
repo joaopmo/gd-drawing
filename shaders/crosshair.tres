@@ -1,0 +1,48 @@
+[gd_resource type="VisualShader" load_steps=4 format=3 uid="uid://voryibuaad0l"]
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_nvjf5"]
+expanded_output_ports = [0]
+input_name = "uv"
+
+[sub_resource type="VisualShaderNodeTexture2DParameter" id="VisualShaderNodeTexture2DParameter_olipg"]
+parameter_name = "texture_paint"
+
+[sub_resource type="VisualShaderNodeTexture" id="VisualShaderNodeTexture_rjjo5"]
+output_port_for_preview = 4
+expanded_output_ports = [0]
+source = 5
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
+
+uniform sampler2D texture_paint;
+
+
+
+void fragment() {
+// Input:2
+	vec2 n_out2p0 = UV;
+
+
+	vec4 n_out4p0;
+// Texture2D:4
+	n_out4p0 = texture(texture_paint, n_out2p0);
+	float n_out4p4 = n_out4p0.a;
+
+
+// Output:0
+	ALBEDO = vec3(n_out4p0.xyz);
+	ALPHA = n_out4p4;
+
+
+}
+"
+nodes/fragment/0/position = Vector2(420, 420)
+nodes/fragment/2/node = SubResource("VisualShaderNodeInput_nvjf5")
+nodes/fragment/2/position = Vector2(-604.567, 368.318)
+nodes/fragment/3/node = SubResource("VisualShaderNodeTexture2DParameter_olipg")
+nodes/fragment/3/position = Vector2(-624.567, 508.318)
+nodes/fragment/4/node = SubResource("VisualShaderNodeTexture_rjjo5")
+nodes/fragment/4/position = Vector2(35.4332, 508.318)
+nodes/fragment/connections = PackedInt32Array(3, 0, 4, 2, 2, 0, 4, 0, 4, 0, 0, 0, 4, 4, 0, 1)

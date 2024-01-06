@@ -3,12 +3,12 @@
 [ext_resource type="Texture2D" uid="uid://c1ivwkv8n0e7d" path="res://assets/hdris/kloofendal_48d_partly_cloudy_puresky_2k.hdr" id="1_f0drt"]
 [ext_resource type="PackedScene" uid="uid://dljc634vpa233" path="res://scenes/Player.tscn" id="2_me14a"]
 [ext_resource type="PackedScene" uid="uid://b0c55rfg4xbvj" path="res://scenes/Stage.tscn" id="2_v8o6y"]
-[ext_resource type="Script" path="res://scripts/DrawBrush.gd" id="3_syip0"]
+[ext_resource type="Script" path="res://scripts/Brush.gd" id="3_syip0"]
 [ext_resource type="Script" path="res://scripts/SetUVPositionMesh.gd" id="4_88ga8"]
 [ext_resource type="Texture2D" uid="uid://d1r6wn0i4gahc" path="res://assets/textures/texture_07.png" id="4_y28wh"]
-[ext_resource type="Shader" path="res://shaders/draw.gdshader" id="5_skpb1"]
-[ext_resource type="Script" path="res://scripts/CrosshairBrush.gd" id="8_xsl6p"]
-[ext_resource type="Shader" uid="uid://voryibuaad0l" path="res://shaders/crosshair.tres" id="9_0qwkx"]
+[ext_resource type="Shader" path="res://shaders/triplanar-texture.gdshader" id="5_skpb1"]
+[ext_resource type="Script" path="res://scripts/CrosshairVP.gd" id="8_xsl6p"]
+[ext_resource type="Shader" uid="uid://voryibuaad0l" path="res://scenes/Main.tres" id="9_0qwkx"]
 [ext_resource type="Script" path="res://scripts/CrosshairDecal.gd" id="9_iicj6"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_4nkqe"]
@@ -97,39 +97,24 @@ size = Vector2i(16348, 16348)
 render_target_clear_mode = 1
 render_target_update_mode = 4
 
-[node name="DrawBrush" type="Node2D" parent="DrawViewport"]
+[node name="Brush" type="Node2D" parent="DrawViewport"]
 script = ExtResource("3_syip0")
 
-[node name="Crosshair" type="Node3D" parent="."]
-
-[node name="CrosshairViewport" type="SubViewport" parent="Crosshair"]
-disable_3d = true
-transparent_bg = true
+[node name="CrosshairViewport" type="SubViewport" parent="."]
 handle_input_locally = false
-size = Vector2i(1024, 1024)
 render_target_update_mode = 4
 
-[node name="CrosshairBrush" type="Node2D" parent="Crosshair/CrosshairViewport"]
+[node name="Crosshair" type="Node2D" parent="CrosshairViewport"]
 script = ExtResource("8_xsl6p")
 
-[node name="CrosshairDecal" type="MeshInstance3D" parent="Crosshair"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("QuadMesh_hmn5u")
-skeleton = NodePath("../..")
 script = ExtResource("9_iicj6")
 
-[connection signal="brush_color_change" from="Player" to="DrawViewport/DrawBrush" method="_on_player_brush_color_change"]
-[connection signal="brush_color_change" from="Player" to="Crosshair/CrosshairViewport/CrosshairBrush" method="_on_player_brush_color_change"]
-[connection signal="brush_size_change" from="Player" to="DrawViewport/DrawBrush" method="_on_player_brush_size_change"]
-[connection signal="brush_size_change" from="Player" to="Crosshair/CrosshairViewport/CrosshairBrush" method="_on_player_brush_size_change"]
-[connection signal="crosshair_ray_cast_start" from="Player" to="Crosshair/CrosshairViewport/CrosshairBrush" method="_on_player_crosshair_ray_cast_start"]
-[connection signal="crosshair_ray_cast_start" from="Player" to="Crosshair/CrosshairDecal" method="_on_player_crosshair_ray_cast_start"]
-[connection signal="crosshair_ray_cast_stop" from="Player" to="Crosshair/CrosshairDecal" method="_on_player_crosshair_ray_cast_stop"]
-[connection signal="drawing_input" from="Player" to="DrawViewport/DrawBrush" method="_on_player_drawing_input"]
-[connection signal="drawing_start" from="Player" to="DrawViewport/DrawBrush" method="_on_player_drawing_start"]
-[connection signal="drawing_start" from="Player" to="Crosshair/CrosshairViewport/CrosshairBrush" method="_on_player_drawing_start"]
-[connection signal="drawing_stop" from="Player" to="DrawViewport/DrawBrush" method="_on_player_drawing_stop"]
-[connection signal="drawing_stop" from="Player" to="Crosshair/CrosshairViewport/CrosshairBrush" method="_on_player_drawing_stop"]
-[connection signal="drawing_stop" from="Player" to="Crosshair/CrosshairDecal" method="_on_player_drawing_stop"]
+[connection signal="brush_color_change" from="Player" to="DrawViewport/Brush" method="_on_player_brush_color_change"]
+[connection signal="brush_size_change" from="Player" to="DrawViewport/Brush" method="_on_player_brush_size_change"]
+[connection signal="drawing_start" from="DrawViewport/Brush" to="Player" method="_on_brush_drawing_start"]
+[connection signal="drawing_stop" from="DrawViewport/Brush" to="Player" method="_on_brush_drawing_stop"]
 
 [editable path="Player"]
 [editable path="Stage"]
