@@ -33,10 +33,10 @@ func _on_player_brush_color_change(color):
 	brush_color = color
 	queue_redraw()
 
-func _on_player_drawing_start(crosshair_ray_cast):
+func _on_player_drawing_start(_crosshair_ray_cast):
 	is_drawing = true
 
-func _on_player_drawing_stop(crosshair_ray_cast):
+func _on_player_drawing_stop(_crosshair_ray_cast):
 	is_drawing = false
 
 

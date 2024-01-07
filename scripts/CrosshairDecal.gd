@@ -4,7 +4,6 @@ extends MeshInstance3D
 
 func _ready():
 	(mesh.material as ShaderMaterial).set_shader_parameter("texture_paint", get_node('/root/Main/Crosshair/CrosshairViewport').get_texture())
-	print("ch ", crosshair_viewport.scaling_3d_scale)
 	
 
 func _on_player_crosshair_ray_cast_start(crosshair_ray_cast: RayCast3D):
